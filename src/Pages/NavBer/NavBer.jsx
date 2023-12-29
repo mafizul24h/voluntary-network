@@ -7,7 +7,7 @@ const NavBer = () => {
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to='/'><img style={{height: '40px'}} src={logo} alt="Logo" /></Link>
+                    <Link className="navbar-brand" to='/'><img style={{ height: '40px' }} src={logo} alt="Logo" /></Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -18,6 +18,9 @@ const NavBer = () => {
                             </li>
                             <li className="nav-item me-3">
                                 <NavLink to='/donation' className={({ isActive }) => isActive ? 'btn btn-success' : 'btn btn-outline-success'}>Donation</NavLink>
+                            </li>
+                            <li className="nav-item me-3">
+                                <NavLink to='/login' className={({ isActive }) => isActive ? 'btn btn-success' : 'btn btn-outline-success'}>Login</NavLink>
                             </li>
                         </ul>
                     </div>
