@@ -23,7 +23,7 @@ const Dashboard = () => {
                     <div className=' p-3'>
                         <Link to='/'><img style={{ height: '50px' }} src={logo} alt="" /></Link>
                         <div className='mt-2'>
-                            <div className='text-center p-3'>
+                            <div style={{height: '180px'}} className='text-center p-3'>
                                 <img style={{ width: '100px', height: '100px' }} className='border border-success rounded-circle mb-2 ' src={user?.photoURL} alt={user?.displayName} />
                                 <h4 className='text-dark'>{user?.displayName}</h4>
                             </div>
