@@ -2,20 +2,25 @@ import React, { useContext, useState } from 'react';
 import logo from './../../assets/logos/Group1329.png'
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../Providers/AuthProvider';
+import { Helmet } from 'react-helmet-async';
+import { updateProfile } from 'firebase/auth';
 
 const image_Hosting_Key = import.meta.env.VITE_IMAGE_API_TOKEN;
 
 const Register = () => {
-    const {createUser} = useContext(AuthContext);
+    const { createUser, setReload, logOut } = useContext(AuthContext);
     const [show, setShow] = useState(false);
     const [passError, setPasError] = useState();
     const [confirmError, setConfirmError] = useState();
     const [matchError, setMatchError] = useState();
     const [image, setImage] = useState();
     const imageURL = `https://api.imgbb.com/1/upload?key=${image_Hosting_Key}`;
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
     const {
         register,
@@ -75,26 +80,44 @@ const Register = () => {
             method: 'POST',
             body: formData
         })
-        .then(res => res.json())
-        .then(resImg => {
-            if(resImg.success) {
-                data.image = resImg.data.display_url;
-                console.log(data);
+            .then(res => res.json())
+            .then(resImg => {
+                if (resImg.success) {
+                    data.image = resImg.data.display_url;
+                    // console.log(data);
 
-                createUser(data.email, data.password)
-                .then(result => {
-                    const logedUser = result.user;
-                    console.log(logedUser);
+                    createUser(data.email, data.password)
+                        .then(result => {
+                            const logedUser = result.user;
+                            // console.log(logedUser);
+                            userProfileUpdate(logedUser, data.name, data.image)
+                            // logOut()
+                            //     .then(() => { })
+                            //     .catch(error => console.log(error));
+                            navigate(from, { replace: true });
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                }
+            })
+
+        const userProfileUpdate = (currentUser, name, URL) => {
+            updateProfile(currentUser, {
+                displayName: name, photoURL: URL
+            })
+                .then(() => {
+                    setReload(true);
                 })
-                .catch(error => {
-                    console.log(error);
-                })
-            }
-        })
+                .catch(error => console.log(error))
+        }
     }
 
     return (
         <div >
+            <Helmet>
+                <title>Volunteer Network || Registration</title>
+            </Helmet>
             <div className="col-md-8 col-lg-6 bg-white p-4 p-lg-5 rounded mx-md-auto my-5 mx-3">
                 <div className='d-flex justify-content-around mb-3'>
                     <img style={{ height: '40px' }} src={logo} alt="Logo" />

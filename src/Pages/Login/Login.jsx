@@ -2,13 +2,17 @@ import React, { useContext, useState } from 'react';
 import logo from './../../assets/logos/Group1329.png'
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Providers/AuthProvider';
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
-    const {singInUser} = useContext(AuthContext);
+    const { singInUser } = useContext(AuthContext);
     const [show, setShow] = useState(false);
     const [passError, setPasError] = useState();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = (event) => {
         event.preventDefault();
@@ -31,22 +35,27 @@ const Login = () => {
         } else if (password.length < 6) {
             setPasError('Please add password minimum 6 character')
             return;
-        }else {
+        } else {
             setPasError('')
         }
-        console.log(email, password);
+        // console.log(email, password);
         singInUser(email, password)
-        .then(result => {
-            const loggedUser = result.user;
-            console.log(loggedUser);
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(result => {
+                const loggedUser = result.user;
+                // console.log(loggedUser);
+                navigate(from, { replace: true })
+                event.target.reset();
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     return (
         <div>
+            <Helmet>
+                <title>Volunteer Network || Login</title>
+            </Helmet>
             <div className="col-md-8 col-lg-6 bg-white p-4 p-lg-5 rounded mx-md-auto my-5 mx-3">
                 <div className='d-flex justify-content-around mb-3'>
                     <img style={{ height: '40px' }} src={logo} alt="Logo" />

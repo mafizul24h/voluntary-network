@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from './../../assets/logos/Group1329.png'
+import { AuthContext } from '../../Providers/AuthProvider';
 
 const NavBer = () => {
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        logOut()
+            .then(() => { })
+            .catch(error => console.log(error))
+    }
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -20,7 +29,13 @@ const NavBer = () => {
                                 <NavLink to='/donation' className={({ isActive }) => isActive ? 'btn btn-success' : 'btn btn-outline-success'}>Donation</NavLink>
                             </li>
                             <li className="nav-item me-3">
-                                <NavLink to='/login' className={({ isActive }) => isActive ? 'btn btn-success' : 'btn btn-outline-success'}>Login</NavLink>
+                                {
+                                    user?.email ? <>
+                                        <button onClick={handleLogout} className='btn btn-outline-success me-2'>Logout</button>
+                                        <Link to={'/admin'} className='btn btn-primary me-2'>Admin</Link>
+                                        <img style={{ width: '40px', height: '40px', borderRadius: '50%' }} className='border border-success' title={user?.displayName} src={user?.photoURL} alt={user?.displayName} />
+                                    </> : <NavLink to='/login' className={({ isActive }) => isActive ? 'btn btn-success' : 'btn btn-outline-success'}>Login</NavLink>
+                                }
                             </li>
                         </ul>
                     </div>
