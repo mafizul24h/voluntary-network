@@ -18,7 +18,7 @@ const AddEvent = () => {
         const description = form.description.value;
 
         const newEvent = {
-            eventTitle, eventDate, description, image, email: user?.email
+            eventTitle, eventDate, description, email: user?.email
         }
 
         const formData = new FormData();
@@ -33,7 +33,7 @@ const AddEvent = () => {
                 if (resData.success) {
                     newEvent.image = resData.data.display_url;
 
-                    console.log(newEvent);
+                    // console.log(newEvent);
                     fetch('http://localhost:5000/events', {
                         method: 'POST',
                         headers: {
@@ -51,7 +51,7 @@ const AddEvent = () => {
                                     showConfirmButton: false,
                                     timer: 1500
                                   });
-                                  
+                                  event.target.reset();
                             }
                         })
                 }

@@ -9,6 +9,8 @@ import Donation from '../Pages/Home/Donation/Donation';
 import PrivateRoute from './PrivateRoute';
 import Dashboard from '../Layout/Dashboard';
 import AddEvent from '../Admin/AddEvent/AddEvent';
+import AllEvents from '../Admin/AllEvents/AllEvents';
+import MyEvents from '../Admin/MyEvents/MyEvents';
 
 const router = createBrowserRouter([
     {
@@ -41,6 +43,14 @@ const router = createBrowserRouter([
             {
                 path: 'addEvent',
                 element: <AddEvent />
+            },
+            {
+                path: 'allEvent',
+                element: <AllEvents />
+            },
+            {
+                path: 'myEvent',
+                element: <MyEvents />
             }
         ]
     }

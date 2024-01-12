@@ -23,7 +23,7 @@ const Dashboard = () => {
                     <div className=' p-3'>
                         <Link to='/'><img style={{ height: '50px' }} src={logo} alt="" /></Link>
                         <div className='mt-2'>
-                            <div style={{height: '180px'}} className='text-center p-3'>
+                            <div style={{ height: '180px' }} className='text-center p-3'>
                                 <img style={{ width: '100px', height: '100px' }} className='border border-success rounded-circle mb-2 ' src={user?.photoURL} alt={user?.displayName} />
                                 <h4 className='text-dark'>{user?.displayName}</h4>
                             </div>
@@ -35,17 +35,17 @@ const Dashboard = () => {
                                 <li className="nav-item mb-2">
                                     <NavLink to='/donation' className={({ isActive }) => isActive ? 'btn btn-success w-100' : 'btn btn-outline-success w-100'}><FaDonate /> Donation</NavLink>
                                 </li>
-                                <li className="nav-item mb-2">
+                                {/* <li className="nav-item mb-2">
                                     <NavLink to='/admin/registerList' className={({ isActive }) => isActive ? 'btn btn-success w-100' : 'btn btn-outline-success w-100'}><FaUsers /> Volunteer register list</NavLink>
-                                </li>
+                                </li> */}
                                 <li className="nav-item mb-2">
                                     <NavLink to='/admin/addEvent' className={({ isActive }) => isActive ? 'btn btn-success w-100' : 'btn btn-outline-success w-100'}><FaPlus /> Add Event</NavLink>
                                 </li>
                                 <li className="nav-item mb-2">
-                                    <NavLink to='/admin/myEvent' className={({ isActive }) => isActive ? 'btn btn-success w-100' : 'btn btn-outline-success w-100'}>My Event</NavLink>
+                                    <NavLink to='/admin/allEvent' className={({ isActive }) => isActive ? 'btn btn-success w-100' : 'btn btn-outline-success w-100'}>All Event Summary</NavLink>
                                 </li>
                                 <li className="nav-item mb-2">
-                                    <NavLink to='/admin/allEvent' className={({ isActive }) => isActive ? 'btn btn-success w-100' : 'btn btn-outline-success w-100'}>All Event Summary</NavLink>
+                                    <NavLink to='/admin/myEvent' className={({ isActive }) => isActive ? 'btn btn-success w-100' : 'btn btn-outline-success w-100'}>My Event</NavLink>
                                 </li>
                                 <li className="nav-item mb-2">
                                     <button onClick={handleLogout} className='btn btn-outline-success mb-2 w-100'>Logout</button>
