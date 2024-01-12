@@ -8,14 +8,30 @@ import { Link } from 'react-router-dom';
 const MyEvents = () => {
     const { user } = useContext(AuthContext);
     const [events, setEvents] = useState([]);
+    const [search, setSearch] = useState('');
+
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/my-events?email=${user?.email}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setEvents(data);
+    //         })
+    // }, []);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/my-events?email=${user?.email}`)
+        if (search === '') {
+            fetch(`http://localhost:5000/my-events?email=${user?.email}`)
             .then(res => res.json())
-            .then(data => {
-                setEvents(data);
-            })
-    }, []);
+            .then(data => setEvents(data))
+        } else {
+            fetch(`http://localhost:5000/eventSearch/${search}`)
+                .then(res => res.json())
+                .then(data => {
+                    const searchData = data.filter(event => event.email === user?.email);
+                    setEvents(searchData);
+                })
+        }
+    }, [user, search])
 
     const handleDelete = (event) => {
         Swal.fire({
@@ -51,6 +67,12 @@ const MyEvents = () => {
     return (
         <div>
             <h2 className='text-center bg-white w-100 py-3 rounded-2'>Event Summary</h2>
+            <div className='text-center bg-white w-100 my-3 rounded-2 py-2 px-4'>
+                <input onChange={(e) => setSearch(e.target.value)} class="form-control w-50" list="datalistOptions" id="exampleDataList" placeholder="search..." />
+                <datalist id="datalistOptions">
+                    {events?.map(event => <option key={event._id} value={event.eventTitle} />)}
+                </datalist>
+            </div>
             <div className='m-3 m-md-4 bg-white p-2 p-md-4 rounded-2'>
                 <table className="table table-striped">
                     <thead>
