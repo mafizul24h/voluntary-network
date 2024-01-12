@@ -11,6 +11,7 @@ import Dashboard from '../Layout/Dashboard';
 import AddEvent from '../Admin/AddEvent/AddEvent';
 import AllEvents from '../Admin/AllEvents/AllEvents';
 import MyEvents from '../Admin/MyEvents/MyEvents';
+import EditEvent from '../Admin/EditEvent/EditEvent';
 
 const router = createBrowserRouter([
     {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
     },
     {
         path: 'admin',
-        element: <Dashboard/>,
+        element: <Dashboard />,
         children: [
             {
                 path: 'addEvent',
@@ -51,6 +52,11 @@ const router = createBrowserRouter([
             {
                 path: 'myEvent',
                 element: <MyEvents />
+            },
+            {
+                path: 'editEvent/:id',
+                element: <EditEvent />,
+                loader: ({params}) => fetch(`http://localhost:5000/event/${params.id}`)
             }
         ]
     }
