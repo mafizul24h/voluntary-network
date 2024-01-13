@@ -34,7 +34,7 @@ const AddEvent = () => {
                     newEvent.image = resData.data.display_url;
 
                     // console.log(newEvent);
-                    fetch('http://localhost:5000/events', {
+                    fetch('https://volunteer-network-server-gamma.vercel.app/events', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json'

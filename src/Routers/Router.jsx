@@ -48,7 +48,7 @@ const router = createBrowserRouter([
             {
                 path: 'allEvent',
                 element: <AllEvents />,
-                loader: () => fetch('http://localhost:5000/totalEvents')
+                loader: () => fetch('https://volunteer-network-server-gamma.vercel.app/totalEvents')
             },
             {
                 path: 'myEvent',
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
             {
                 path: 'editEvent/:id',
                 element: <EditEvent />,
-                loader: ({params}) => fetch(`http://localhost:5000/event/${params.id}`)
+                loader: ({params}) => fetch(`https://volunteer-network-server-gamma.vercel.app/event/${params.id}`)
             }
         ]
     }

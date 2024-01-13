@@ -24,12 +24,12 @@ const AllEvents = () => {
 
     useEffect(() => {
         if (search === '') {
-            fetch(`http://localhost:5000/events?page=${currentPage}&limit=${itemsPerPage}`)
+            fetch(`https://volunteer-network-server-gamma.vercel.app/events?page=${currentPage}&limit=${itemsPerPage}`)
                 .then(res => res.json())
                 .then(data => setEvents(data))
             return;
         } else {
-            fetch(`http://localhost:5000/eventSearch?text=${search}&page=${currentPage}&limit=${itemsPerPage}`)
+            fetch(`https://volunteer-network-server-gamma.vercel.app/eventSearch?text=${search}&page=${currentPage}&limit=${itemsPerPage}`)
                 .then(res => res.json())
                 .then(data => setEvents(data))
         }
@@ -37,12 +37,12 @@ const AllEvents = () => {
 
     // useEffect(() => {
     //     if (search === '') {
-    //         fetch('http://localhost:5000/events')
+    //         fetch('https://volunteer-network-server-gamma.vercel.app/events')
     //             .then(res => res.json())
     //             .then(data => setEvents(data))
     //         return;
     //     } else {
-    //         fetch(`http://localhost:5000/eventSearch/${search}`)
+    //         fetch(`https://volunteer-network-server-gamma.vercel.app/eventSearch/${search}`)
     //             .then(res => res.json())
     //             .then(data => setEvents(data))
     //     }

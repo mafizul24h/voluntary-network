@@ -5,7 +5,7 @@ const Events = () => {
     const [search, setSearch] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:5000/event')
+        fetch('https://volunteer-network-server-gamma.vercel.app/event')
             .then(res => res.json())
             .then(data => {
                 setEvents(data);
@@ -24,12 +24,12 @@ const Events = () => {
     const handleSearch = () => {
         // console.log(search);
         if (search === '') {
-            fetch('http://localhost:5000/event')
+            fetch('https://volunteer-network-server-gamma.vercel.app/event')
                 .then(res => res.json())
                 .then(data => setEvents(data))
             return;
         } else {
-            fetch(`http://localhost:5000/eventSearch?text=${search}`)
+            fetch(`https://volunteer-network-server-gamma.vercel.app/eventSearch?text=${search}`)
                 .then(res => res.json())
                 .then(data => setEvents(data))
         }

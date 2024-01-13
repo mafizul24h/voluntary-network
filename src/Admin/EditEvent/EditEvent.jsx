@@ -39,7 +39,7 @@ const EditEvent = () => {
                     newEvent.image = resData.data.display_url;
 
                     console.log(newEvent);
-                    fetch(`http://localhost:5000/updateEvent/${loadedEvent._id}`, {
+                    fetch(`https://volunteer-network-server-gamma.vercel.app/updateEvent/${loadedEvent._id}`, {
                         method: 'PATCH',
                         headers: {
                             'content-type': 'application/json'

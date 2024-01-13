@@ -31,8 +31,8 @@ const NavBer = () => {
                             <li className="nav-item me-3">
                                 {
                                     user?.email ? <>
-                                        <button onClick={handleLogout} className='btn btn-outline-success me-2'>Logout</button>
                                         <Link to={'/admin/addEvent'} className='btn btn-primary me-2'>Admin</Link>
+                                        <button onClick={handleLogout} className='btn btn-outline-success me-2'>Logout</button>
                                         <img style={{ width: '40px', height: '40px', borderRadius: '50%' }} className='border border-success' title={user?.displayName} src={user?.photoURL} alt={user?.displayName} />
                                     </> : <NavLink to='/login' className={({ isActive }) => isActive ? 'btn btn-success' : 'btn btn-outline-success'}>Login</NavLink>
                                 }

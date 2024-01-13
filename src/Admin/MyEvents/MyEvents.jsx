@@ -12,11 +12,11 @@ const MyEvents = () => {
 
     useEffect(() => {
         if (search === '') {
-            fetch(`http://localhost:5000/my-events?email=${user?.email}`)
+            fetch(`https://volunteer-network-server-gamma.vercel.app/my-events?email=${user?.email}`)
             .then(res => res.json())
             .then(data => setEvents(data))
         } else {
-            fetch(`http://localhost:5000/eventSearch?text=${search}`)
+            fetch(`https://volunteer-network-server-gamma.vercel.app/eventSearch?text=${search}`)
                 .then(res => res.json())
                 .then(data => {
                     const searchData = data.filter(event => event.email === user?.email);
@@ -36,7 +36,7 @@ const MyEvents = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/event/${event._id}`, {
+                fetch(`https://volunteer-network-server-gamma.vercel.app/event/${event._id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
