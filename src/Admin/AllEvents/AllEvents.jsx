@@ -1,44 +1,80 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 
 const AllEvents = () => {
     const [events, setEvents] = useState([]);
     const [search, setSearch] = useState('');
-    // console.log(search);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5)
+    const { totalEvents } = useLoaderData();
+    // console.log(totalEvents);
+    // const itemPerPage = 5;
+    const totalPages = Math.ceil(totalEvents / itemsPerPage);
+    // console.log(totalPages);
 
-    // useEffect(() => {
-    //     fetch('http://localhost:5000/events')
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             setEvents(data);
-    //         })
-    // }, []);
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+    }
+    // console.log(pageNumbers);
+
+    // const pageNums = [...Array(totalPages).keys()]
+    // console.log(pageNums);
 
     useEffect(() => {
         if (search === '') {
-            fetch('http://localhost:5000/events')
+            fetch(`http://localhost:5000/events?page=${currentPage}&limit=${itemsPerPage}`)
                 .then(res => res.json())
                 .then(data => setEvents(data))
-                return;
+            return;
         } else {
-            fetch(`http://localhost:5000/eventSearch/${search}`)
+            fetch(`http://localhost:5000/eventSearch?text=${search}&page=${currentPage}&limit=${itemsPerPage}`)
                 .then(res => res.json())
                 .then(data => setEvents(data))
         }
-    }, [search])
+    }, [search, currentPage, itemsPerPage]);
+
+    // useEffect(() => {
+    //     if (search === '') {
+    //         fetch('http://localhost:5000/events')
+    //             .then(res => res.json())
+    //             .then(data => setEvents(data))
+    //         return;
+    //     } else {
+    //         fetch(`http://localhost:5000/eventSearch/${search}`)
+    //             .then(res => res.json())
+    //             .then(data => setEvents(data))
+    //     }
+    // }, [search]);
+
+    const options = [5, 10, 20, 50, 100, totalEvents]
+    // console.log(options);
+    const handleSelectChange = (event) => {
+        setItemsPerPage(parseInt(event.target.value));
+        setCurrentPage(1);
+    }
 
     return (
         <div>
             <h2 className='text-center bg-white w-100 py-3 rounded-2'>Event Summary</h2>
-            <div className='text-center bg-white w-100 my-3 rounded-2 py-2 px-4'>
-                <div>
-                    <input onChange={(e) => setSearch(e.target.value)} class="form-control w-50" list="datalistOptions" id="exampleDataList" placeholder="search..." />
+            <div className='text-center bg-white w-100 my-3 rounded-2 py-2 px-4 d-flex justify-content-between align-items-cener'>
+                <select className="btn border" onChange={handleSelectChange}>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                    <option value={totalEvents}>All</option>
+                </select>
+                <div className='w-25'>
+                    <input onChange={(e) => setSearch(e.target.value)} className="form-control " list="datalistOptions" id="exampleDataList" placeholder="search..." />
                     <datalist id="datalistOptions">
                         {events?.map(event => <option key={event._id} value={event.eventTitle} />)}
                     </datalist>
                 </div>
             </div>
-            <div className='m-3 m-md-4 bg-white p-2 p-md-4 rounded-2'>
+            <div className='m-3 mx-md-4 bg-white p-2 px-md-4 rounded-2'>
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -61,6 +97,14 @@ const AllEvents = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+            {/* Paginaation  */}
+            <div className='text-center mb-4'>
+                <p className='my-2'>Current Page {currentPage} and Items Per Page {itemsPerPage}</p>
+                {pageNumbers?.map(number => <button className={`${currentPage === number && 'btn-primary text-white'} btn btn-outline-primary me-2`}
+                    key={number}
+                    onClick={() => setCurrentPage(number)}
+                >{number}</button>)}
             </div>
         </div>
     );

@@ -10,21 +10,13 @@ const MyEvents = () => {
     const [events, setEvents] = useState([]);
     const [search, setSearch] = useState('');
 
-    // useEffect(() => {
-    //     fetch(`http://localhost:5000/my-events?email=${user?.email}`)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             setEvents(data);
-    //         })
-    // }, []);
-
     useEffect(() => {
         if (search === '') {
             fetch(`http://localhost:5000/my-events?email=${user?.email}`)
             .then(res => res.json())
             .then(data => setEvents(data))
         } else {
-            fetch(`http://localhost:5000/eventSearch/${search}`)
+            fetch(`http://localhost:5000/eventSearch?text=${search}`)
                 .then(res => res.json())
                 .then(data => {
                     const searchData = data.filter(event => event.email === user?.email);

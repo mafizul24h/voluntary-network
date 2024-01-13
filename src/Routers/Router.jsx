@@ -47,7 +47,8 @@ const router = createBrowserRouter([
             },
             {
                 path: 'allEvent',
-                element: <AllEvents />
+                element: <AllEvents />,
+                loader: () => fetch('http://localhost:5000/totalEvents')
             },
             {
                 path: 'myEvent',
